@@ -20,7 +20,7 @@ type Endereco = {
 type Usuario = {
   nome: string;
   email: string;
-  cpf: number;
+  cpf: string;
   profissao?: string;
   endereco: Endereco | null;
 };
@@ -39,7 +39,35 @@ function listarUsuarios(): Usuario[] {
   return lerArquivo() as Usuario[];
 }
 
-cadastrarUsuario({
+function atualizarUsuario(cpf: string, dados: Usuario): Usuario {
+  const bd = lerArquivo() as Usuario[];
+
+  const usuarioEncontrado = bd.find((usuario) => usuario.cpf === cpf);
+
+  if (!usuarioEncontrado) {
+    throw new Error("Usuário não encontrado");
+  }
+
+  Object.assign(usuarioEncontrado, dados);
+
+  escreverArquivo(bd);
+
+  return dados;
+}
+
+function detalharUsuario(cpf: string): Usuario {
+  const bd = lerArquivo() as Usuario[];
+
+  const usuarioEncontrado = bd.find((usuario) => usuario.cpf === cpf);
+
+  if (!usuarioEncontrado) {
+    throw new Error("Usuário não encontrado");
+  }
+
+  return usuarioEncontrado;
+}
+
+/* cadastrarUsuario({
   nome: "paulo",
   email: "paulo@email.com",
   cpf: 234,
@@ -48,9 +76,9 @@ cadastrarUsuario({
     cep: 456,
     cidade: "torres",
     rua: "pizza",
-/*     complemento: "proximo ao postinho", */
+        complemento: "proximo ao postinho",
   },
-/*   profissao: "entregador", */
-});
+    profissao: "entregador",
+}); */
 
 console.log(listarUsuarios());
