@@ -1,0 +1,26 @@
+[
+  {
+    "nome": "Gusta",
+    "email": "gusta@email.com",
+    "cpf": 123,
+    "endereco": {
+      "bairro": "cadilaque",
+      "cep": 123,
+      "cidade": "santos",
+      "rua": "queijo",
+      "complemento": "proximo ao postinho"
+    },
+    "profissao": "entregador"
+  },
+  {
+    "nome": "paulo",
+    "email": "paulo@email.com",
+    "cpf": 234,
+    "endereco": {
+      "bairro": "cadilaque",
+      "cep": 456,
+      "cidade": "torres",
+      "rua": "pizza"
+    }
+  }
+]
