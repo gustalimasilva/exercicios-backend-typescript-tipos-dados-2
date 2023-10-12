@@ -27,21 +27,27 @@ type Usuario = {
 
 function cadastrarUsuario(dados: Usuario): Usuario {
   const bd = lerArquivo() as Usuario[];
-
   bd.push(dados);
-
   escreverArquivo(bd);
-
   return dados;
 }
 
-function listarUsuarios(): Usuario[] {
-  return lerArquivo() as Usuario[];
+function listarUsuarios(profissao?: string): Usuario[] {
+  const bd = lerArquivo() as Usuario[];
+
+  const usuario = bd.filter((user) => {
+    if (profissao) {
+      return user.profissao === profissao;
+    }
+
+    user;
+  });
+
+  return usuario;
 }
 
 function atualizarUsuario(cpf: string, dados: Usuario): Usuario {
   const bd = lerArquivo() as Usuario[];
-
   const usuarioEncontrado = bd.find((usuario) => usuario.cpf === cpf);
 
   if (!usuarioEncontrado) {
@@ -49,7 +55,6 @@ function atualizarUsuario(cpf: string, dados: Usuario): Usuario {
   }
 
   Object.assign(usuarioEncontrado, dados);
-
   escreverArquivo(bd);
 
   return dados;
@@ -57,12 +62,25 @@ function atualizarUsuario(cpf: string, dados: Usuario): Usuario {
 
 function detalharUsuario(cpf: string): Usuario {
   const bd = lerArquivo() as Usuario[];
-
   const usuarioEncontrado = bd.find((usuario) => usuario.cpf === cpf);
 
   if (!usuarioEncontrado) {
     throw new Error("Usuário não encontrado");
   }
+
+  return usuarioEncontrado;
+}
+
+function excluirUsuario(cpf: string): Usuario {
+  const bd = lerArquivo() as Usuario[];
+  const usuarioEncontrado = bd.find((usuario) => usuario.cpf === cpf);
+
+  if (!usuarioEncontrado) {
+    throw new Error("Usuário não encontrado");
+  }
+
+  const exclusao = bd.filter((user) => user.cpf !== cpf);
+  escreverArquivo(exclusao);
 
   return usuarioEncontrado;
 }
